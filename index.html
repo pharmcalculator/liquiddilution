@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liquid Dilution Calculator</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: inline-block;
+            text-align: left;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            width: 150px;
+            font-size: 16px;
+        }
+
+        button.calculate {
+            background-color: green;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        button.reset {
+            background-color: red;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #results p {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liquid Dilution Calculator</h1>
+    <form>
+        <label for="initialVolume">Initial volume (in mL):</label>
+        <br>
+        <input type="number" id="initialVolume" name="initialVolume">
+        <br>
+        <label for="initialConcentration">Initial concentration (w/v):</label>
+        <br>
+        <input type="text" id="initialConcentration" name="initialConcentration">
+        <br>
+        <label for="finalVolume">Final volume (in mL):</label>
+        <br>
+        <input type="number" id="finalVolume" name="finalVolume">
+        <br>
+        <button class="calculate" type="button" onclick="calculateConcentration()">Calculate</button>
+        <button class="reset" type="reset">Reset</button>
+    </form>
+    <br>
+    <div id="results"></div>
+
+    <script>
+        function calculateConcentration() {
+            var initialVolume = parseFloat(document.getElementById('initialVolume').value);
+            var initialConcentration = document.getElementById('initialConcentration').value;
+            var finalVolume = parseFloat(document.getElementById('finalVolume').value);
+
+            var numerator = parseFloat(initialConcentration.split("/")[0]);
+            var denominator = parseFloat(initialConcentration.split("/")[1]);
+
+            var initialAmount = (numerator * initialVolume) / denominator;
+            var percentageStrength = (initialAmount / finalVolume) * 100;
+            var ratioStrength = "1 in " + Math.round(finalVolume / initialAmount);
+            var amountStrength = (initialAmount * 1000) / finalVolume;
+
+            var results = document.getElementById('results');
+            results.innerHTML = "<h2>Results:</h2>" +
+                "<p>Percentage strength: " + percentageStrength.toFixed(2) + "%</p>" +
+                "<p>Ratio strength: " + ratioStrength + "</p>" +
+                "<p>Amount strength: " + amountStrength.toFixed(2) + " mg/mL</p>";
+        }
+    </script>
+</body>
+</html>
